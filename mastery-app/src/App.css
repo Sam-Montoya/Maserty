@@ -1,31 +1,43 @@
-.main_page {
+#main_page {
 	width: 100vw;
 	height: 100vh;
-  background-color: lightslategray;
-  display: flex;
-  flex-direction: column;
+	background: url('http://www.galaxiastudio.com/wp-content/uploads/2014/03/2252.jpg');
+	background-size: cover;
+	display: flex;
+	flex-direction: column;
+	font-family: 'Roboto', sans-serif;
+	font-size: 22px;
 }
 
 .main_page_header {
 	width: 100vw;
 	height: 80px;
-	background-color: lightcoral;
+	background-color: white;
 	position: fixed;
+	display: flex;
 }
 
 .main_page_header section {
-	font-size: 20px;
-	font-weight: lighter;
 	color: rgb(44, 44, 44);
+	width: 50%;
+	padding: 28px;
+}
+
+.main_page_header section h1 {
+	float: right;
 }
 
 .main_page_container {
-  background-color: white;
+	width: 100vw;
 	margin-top: 80px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 .hero_background_image {
-	height: 500px;
+	height: 40vh;
+	width: 100vw;
 	background: url('https://cdn.allwallpaper.in/wallpapers/2400x1350/5394/sun-buildings-cities-streets-2400x1350-wallpaper.jpg')
 		no-repeat;
 	background-attachment: fixed;
@@ -34,6 +46,98 @@
 }
 
 .hero_background_image:nth-child(1) {
-  font-size: 40px;
-  color: white;
+	font-size: 40px;
+	color: white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.main_page_demos {
+	width: 100vw;
+	min-height: 35vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	color: white;
+}
+
+.main_page_demos h1,
+p {
+	margin-bottom: 10px;
+}
+
+.demo_box_container {
+	display: flex;
+	width: 80vw;
+	justify-content: space-around;
+}
+
+.demo_box {
+	width: 12vw;
+	height: 12vw;
+	transition: all 0.3s ease;
+	box-shadow: 0px 0px 0px 1px white inset;
+	border: 1px solid white;
+}
+
+.axios_box {
+	background: url('https://tezhost.com/wp-content/uploads/2015/06/background-15.jpg');
+	background-size: cover;
+}
+
+.redux_box {
+	background: url('https://saasaddict.walkme.com/wp-content/uploads/2014/04/saas-programming.jpg');
+	background-size: cover;
+}
+
+.props_box {
+	background: url('https://tezhost.com/wp-content/uploads/2015/06/background-15.jpg');
+	background-size: cover;
+}
+
+.explainations_box {
+	background: url('https://tezhost.com/wp-content/uploads/2015/06/background-15.jpg');
+	background-size: cover;
+}
+
+.demo_box:hover {
+	box-shadow: 0px 0px 0px 3px white inset;
+}
+
+.demo_box h1 {
+	padding: 15px;
+	margin-right: 10px;
+	background-color: rgba(31, 31, 31, 0.5);
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.buttons_container {
+	width: 40vw;
+	height: 10vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.buttons_container h1 {
+	margin-top: 20px;
+}
+
+.buttons_container div button {
+	margin-top: 20px;
+	width: 10vw;
+	display: flex;
+	justify-content: center;
+	border-style: none;
+	margin-right: 30px;
+	height: 40px;
+	background-color: rgb(121, 201, 255);
+	font-size: 18px;
+}
+
+.buttons_container div button:nth-child(2):focus {
+	color: white;
 }
