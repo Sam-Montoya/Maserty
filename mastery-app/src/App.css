@@ -1,18 +1,39 @@
-.main_page_container {
-  width: 100vw;
-  height: 100vh;
+.main_page {
+	width: 100vw;
+	height: 100vh;
   background-color: lightslategray;
+  display: flex;
+  flex-direction: column;
 }
 
 .main_page_header {
-  width: 100vw;
-  height: 80px;
-  background-color: lightcoral;
-  position: fixed;
+	width: 100vw;
+	height: 80px;
+	background-color: lightcoral;
+	position: fixed;
 }
 
 .main_page_header section {
-  font-size: 20px;
-  font-weight: lighter;
-  color: rgb(44, 44, 44);
+	font-size: 20px;
+	font-weight: lighter;
+	color: rgb(44, 44, 44);
+}
+
+.main_page_container {
+  background-color: white;
+	margin-top: 80px;
+}
+
+.hero_background_image {
+	height: 500px;
+	background: url('https://cdn.allwallpaper.in/wallpapers/2400x1350/5394/sun-buildings-cities-streets-2400x1350-wallpaper.jpg')
+		no-repeat;
+	background-attachment: fixed;
+	background-position: center;
+	background-size: cover;
+}
+
+.hero_background_image:nth-child(1) {
+  font-size: 40px;
+  color: white;
 }
