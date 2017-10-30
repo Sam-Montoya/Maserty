@@ -90,11 +90,12 @@ export default class Axios extends React.Component {
 
 	mapThroughTasks = () => {
 		return this.state.allTasks.map((task, index) => {
+			let {title, descr, time} = task;
 			return (
 				<section className='task_container' key={index}>
-					<div style={{ fontWeight: 'bold' }}>{task.title}</div>
-					<div>{task.descr}</div>
-					<h1>{task.time}</h1>
+					<div style={{ fontWeight: 'bold' }}>{title}</div>
+					<div>{descr}</div>
+					<h1>{time}</h1>
 					<button onClick={() => this.deleteTask(task.id)}>Delete</button>
 					<button onClick={() => this.updateTicket(task.id)}>Edit</button>
 				</section>
