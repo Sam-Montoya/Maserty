@@ -1,0 +1,1 @@
+UPDATE todo SET (title, descr, time) = ($1, $2, $3) WHERE id = $4;

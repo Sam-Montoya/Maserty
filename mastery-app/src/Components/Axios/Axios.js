@@ -7,192 +7,96 @@ export default class Axios extends React.Component {
 		super();
 
 		this.state = {
-			products: [],
-			isLoggedIn: false,
-			userInfo: [],
-			userFavorites: []
+			allTasks: [],
+			headerText: 'Add a task!',
+			titleText: '',
+			descrText: '',
+			timeText: '',
+			id: null
 		};
 	}
+
 	componentDidMount() {
-		axios.get('https://practiceapi.devmountain.com/products').then((products) => {
+		axios.get('/api/getAllTasks').then((tasks) => {
 			this.setState({
-				products: products.data
+				allTasks: tasks.data
 			});
 		});
 	}
 
+	submitTask = () => {
+		let taskInfo = {
+			titleText: this.state.titleText,
+			descrText: this.state.descrText,
+			timeText: this.state.timeText,
+			id: this.state.id
+		};
+		if (this.state.headerText === 'Add a task!' && this.state.id === null) {
+			axios.post('/api/addTask', taskInfo).then((tasks) => {
+				this.setState({
+					allTasks: tasks.data
+				});
+			});
+		} else {
+			axios.put('/api/updateTask', taskInfo).then((tasks) => {
+				this.setState({
+					allTasks: tasks.data
+				});
+			});
+		}
+	};
+
+	deleteTask = (id) => {
+		axios.delete('/api/deleteTask/' + id).then((tasks) => {
+			this.setState({
+				allTasks: tasks.data
+			});
+		});
+	};
+
+	updateTicket = (id) => {
+		if (this.state.headerText === 'Edit Info!') {
+			this.setState({
+				headerText: 'Add a task!',
+				id: null
+			});
+		} else {
+			this.setState({
+				headerText: 'Edit Info!',
+				id: id
+			});
+		}
+	};
+
 	render() {
-		console.log(this.state);
 		return (
-			<div className='products_container'>
-				<section className='products_all_products'>{this.mapThroughProducts(this.state.products)}</section>
-				<section className='products_user_container'>
-					{this.userController()}
-					<div className='products_user_favorites'>{this.mapThroughFavorites(this.state.userFavorites)}</div>
+			<div className='axios_container'>
+				<section className='axios_addtask_container'>
+					{this.state.headerText}
+					<input onChange={(text) => this.setState({ titleText: text.target.value })} placeholder='title' />
+					<input
+						onChange={(text) => this.setState({ descrText: text.target.value })}
+						placeholder='description'
+					/>
+					<input onChange={(text) => this.setState({ timeText: text.target.value })} placeholder='time' />
+					<button onClick={() => this.submitTask()}>Submit</button>
 				</section>
+				<section className='axios_alltasks_container'>{this.mapThroughTasks()}</section>
 			</div>
 		);
 	}
 
-	getUserInfo = () => {
-		axios.get('http://localhost:3030/api/getUserFavorites/' + this.refs.submitInput.value).then((userData) => {
-			this.setState({
-				userInfo: userData.data.userInfo
-			});
-			for (let i = 0; i < userData.data.favorites.length; i++) {
-				axios
-					.get('https://practiceapi.devmountain.com/products/' + userData.data.favorites[i].favorite_id)
-					.then((response) => {
-						this.setState({
-							userFavorites: [ ...this.state.userFavorites, response.data ],
-							userInfo: userData.data.userInfo,
-							isLoggedIn: true
-						});
-					});
-			}
-		});
-	};
-
-	mapThroughProducts = (products) => {
-		if (products.length) {
-			let product = products.map((product, index) => {
-				return (
-					<div key={index} className='product_container'>
-						<section className='product_image'>
-							<img src={product.image} alt='' />
-						</section>
-						<section className='product_info'>
-							<h1>{product.title}</h1>
-							<h1>{product.desc}</h1>
-							<h1>{product.price}</h1>
-						</section>
-
-						<button onClick={() => this.addFavorite(product.id)} className='products_add_button'>
-							Add
-						</button>
-					</div>
-				);
-			});
-			return product;
-		}
-	};
-
-	mapThroughFavorites = (products) => {
-		let product;
-		if (products.length) {
-			product = products.map((product, index) => {
-				return (
-					<div key={index} className='product_container'>
-						<section className='product_image'>
-							<img src={product.image} alt='' />
-						</section>
-						<section className='product_info'>
-							<h1>{product.title}</h1>
-							<h1>{product.desc}</h1>
-							<h1>{product.price}</h1>
-						</section>
-						<button onClick={() => this.removeFavorite(product.id)} className='products_remove_button'>
-							Remove
-						</button>
-					</div>
-				);
-			});
-		} else if (products.title) {
-			product = (
-				<div className='product_container'>
-					<section className='product_image'>
-						<img src={this.state.userFavorites.image} alt='' />
-					</section>
-					<section className='product_info'>
-						<h1>{this.state.userFavorites.title}</h1>
-						<h1>{this.state.userFavorites.desc}</h1>
-						<h1>{this.state.userFavorites.price}</h1>
-					</section>
-					<button
-						onClick={() => this.removeFavorite(this.state.userFavorites.product_id)}
-						className='products_remove_button'>
-						Remove
-					</button>
-				</div>
-			);
-		}
-		return product;
-	};
-
-	addFavorite(product_id) {
-		let favoriteInfo = {
-			user_id: this.state.userInfo.user_id,
-			favorite_id: product_id
-		};
-		axios.post('http://localhost:3030/api/addFavorite/', favoriteInfo).then((favorites) => {
-			for (let i = 0; i < favorites.data.length; i++) {
-				axios
-					.get('https://practiceapi.devmountain.com/products/' + favorites.data[i].favorite_id)
-					.then((response) => {
-						this.setState({
-							userFavorites: [ ...this.state.userFavorites, response.data ]
-						});
-					});
-			}
-		});
-	}
-
-	removeFavorite(product_id) {
-		let removeInfo = {
-			user_id: this.state.userInfo.user_id,
-			favorite_id: product_id
-		};
-		console.log(removeInfo);
-		axios
-			.delete('http://localhost:3030/api/removeFavorite/' + this.state.userInfo.user_id + '/' + product_id)
-			.then((favorites) => {
-				for (let i = 0; i < favorites.data.length; i++) {
-					axios
-						.get('https://practiceapi.devmountain.com/products/' + favorites.data[i].favorite_id)
-						.then((response) => {
-							console.log(response);
-							this.setState(
-								{
-									userFavorites: response.data
-								},
-								() => {
-									this.mapThroughProducts(response.data, true);
-								}
-							);
-						});
-				}
-			});
-	}
-
-	updateUserPicture = () => {
-		let profileInfo = {
-			username: this.state.userInfo.username,
-			profile_pic: this.refs.picture_input.value
-		};
-		axios.put('http://localhost:3030/api/updateUserPicture', profileInfo).then((response) => {
-			this.setState({
-				userInfo: response.data[0]
-			});
-		});
-	};
-
-	userController = () => {
-		if (this.state.isLoggedIn) {
+	mapThroughTasks = () => {
+		return this.state.allTasks.map((task, index) => {
 			return (
-				<div className='products_user_info'>
-					<img src={this.state.userInfo.profile_pic} alt='' />
-					<input ref='picture_input' placeholder='Enter URL' />
-					<button onClick={() => this.updateUserPicture()}>Update Profile Picture</button>
-				</div>
+				<section className='task_container' key={index}>
+					<div style={{ fontWeight: 'bold' }}>{task.title}</div>
+					<div>{task.descr}</div>
+					<h1>{task.time}</h1>
+					<button onClick={() => this.deleteTask(task.id)}>Delete</button>
+					<button onClick={() => this.updateTicket(task.id)}>Edit</button>
+				</section>
 			);
-		} else {
-			return (
-				<div className='axios_login_input'>
-					<h1>Enter a username to view favorites!</h1>
-					<input ref='submitInput' placeholder='Enter your username...' />
-					<button onClick={() => this.getUserInfo()}>Submit</button>
-				</div>
-			);
-		}
+		});
 	};
 }

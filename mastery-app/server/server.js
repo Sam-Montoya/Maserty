@@ -16,41 +16,35 @@ massive('postgres://@localhost:5432/Mastery')
 		console.log('Something happened... ' + err);
 	});
 
-app.post('/api/addFavorite', (request, response) => {
-	console.log(request.body);
+app.get('/api/getAllTasks', (request, response) => {
 	let DB = app.get('db');
-	DB.add_favorite([request.body.user_id, request.body.favorite_id]).then(favorites => {
-		response.status(200).send(favorites);
-	})
-})
-
-app.get('/api/getUserFavorites/:username', (request, response) => {
-	let DB = app.get('db');
-	DB.get_users(request.params.username).then((user) => {
-		if (user[0].user_id) {
-			DB.get_user_favorites(user[0].user_id).then((favorites) => {
-				let userData = {
-					userInfo: user[0],
-					favorites: favorites
-				}
-				response.status(200).send(userData);
-			});
-		}
+	DB.get_all_tasks().then((tasks) => {
+		response.status(200).send(tasks);
 	});
 });
-app.put('/api/updateUserPicture', (request, response) => {
+app.post('/api/addTask', (request, response) => {
 	let DB = app.get('db');
-	DB.update_picture([request.body.username, request.body.profile_pic]).then(userData => {
-		response.status(200).send(userData);
-	})
-
-})
-app.delete('/api/removeFavorite/:user_id/:favorite_id', (request, response)=> {
+	DB.add_task([ request.body.titleText, request.body.descrText, request.body.timeText ]).then((_) => {
+		DB.get_all_tasks().then((tasks) => {
+			response.status(200).send(tasks);
+		});
+	});
+});
+app.put('/api/updateTask', (request, response) => {
 	let DB = app.get('db');
-	DB.remove_favorite([request.params.user_id, request.params.favorite_id]).then(res => {
-		console.log(res);
-		response.status(200).send(res);
+	DB.update_task([request.body.titleText, request.body.descrText, request.body.timeText, request.body.id ]).then(_ => {
+		DB.get_all_tasks().then((tasks) => {
+			response.status(200).send(tasks);
+		});
 	})
-})
+});
+app.delete('/api/deleteTask/:id', (request, response) => {
+	let DB = app.get('db');
+	DB.delete_task(request.params.id).then((_) => {
+		DB.get_all_tasks().then((tasks) => {
+			response.status(200).send(tasks);
+		});
+	});
+});
 
 app.listen(3030, () => console.log('Server being slapped on port 3030'));
