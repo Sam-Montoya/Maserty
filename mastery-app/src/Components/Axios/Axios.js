@@ -14,6 +14,8 @@ export default class Axios extends React.Component {
 			timeText: '',
 			id: null
 		};
+
+		this.submitTask = this.submitTask.bind(this);
 	}
 
 	componentDidMount() {
@@ -24,7 +26,7 @@ export default class Axios extends React.Component {
 		});
 	}
 
-	submitTask = () => {
+	submitTask () {
 		let taskInfo = {
 			titleText: this.state.titleText,
 			descrText: this.state.descrText,
