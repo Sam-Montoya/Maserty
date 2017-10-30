@@ -7,7 +7,7 @@ import Redux from './Components/Redux/Redux';
 export default (
 	<Switch>
 		<Route exact path='/' component={Main} />
-		<Route path='/axios' component={Axios} />
+		<Route path='/axios' component={Axios} test='test'/>
 		<Route path='/redux' component={Redux} />
 	</Switch>
 );

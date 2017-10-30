@@ -18,6 +18,9 @@ export default class Axios extends React.Component {
 		this.submitTask = this.submitTask.bind(this);
 	}
 
+	//ComponentDidMount - This lifecycle method will run the needed API call once the component has been 'mounted'.
+	//It grabs the information and displays it right as the user loads the page. The ComponentDidMount lifecycle method
+	//is really important when you want things to be ran when the page loads. Basically, setting up the web page with information.
 	componentDidMount() {
 		axios.get('/api/getAllTasks').then((tasks) => {
 			this.setState({

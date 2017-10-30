@@ -130,8 +130,15 @@ p {
 
 .buttons_container div button:nth-child(2):focus {
 	color: white;
+	transform: rotate(7deg);
+	animation: big 1s ease;
 }
 
 a {
 	color: white;
+}
+
+@keyframes big {
+	from {width: 10vw;}
+	to {width: 15vw;}
 }
