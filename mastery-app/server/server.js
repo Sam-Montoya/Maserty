@@ -24,7 +24,8 @@ app.get('/api/getAllTasks', (request, response) => {
 });
 app.post('/api/addTask', (request, response) => {
 	let DB = app.get('db');
-	DB.add_task([ request.body.titleText, request.body.descrText, request.body.timeText ]).then((_) => {
+	let { titleText, descrText, timeText } = request.body;
+	DB.add_task([ titleText, descrText, timeText ]).then((_) => {
 		DB.get_all_tasks().then((tasks) => {
 			response.status(200).send(tasks);
 		});
@@ -32,11 +33,16 @@ app.post('/api/addTask', (request, response) => {
 });
 app.put('/api/updateTask', (request, response) => {
 	let DB = app.get('db');
-	DB.update_task([request.body.titleText, request.body.descrText, request.body.timeText, request.body.id ]).then(_ => {
+	DB.update_task([
+		request.body.titleText,
+		request.body.descrText,
+		request.body.timeText,
+		request.body.id
+	]).then((_) => {
 		DB.get_all_tasks().then((tasks) => {
 			response.status(200).send(tasks);
 		});
-	})
+	});
 });
 app.delete('/api/deleteTask/:id', (request, response) => {
 	let DB = app.get('db');
