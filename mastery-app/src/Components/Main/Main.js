@@ -33,9 +33,11 @@ export default class Main extends React.Component {
 								</section>
 							</Link>
 
-							<section className='demo_box props_box'>
-								<h1>Props</h1>
-							</section>
+							<Link to={'/redux/' + 'sam'}>
+								<section className='demo_box props_box'>
+									<h1>Props</h1>
+								</section>
+							</Link>
 
 							<section className='demo_box explainations_box'>
 								<h1>Explainations</h1>

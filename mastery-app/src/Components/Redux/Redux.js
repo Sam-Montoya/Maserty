@@ -17,7 +17,7 @@ class Redux extends React.Component {
 					placeholder='enter a new username'
 				/>
                 <h1>Is matched? {this.props.match.isExact.toString()}</h1>
-                <Nested username={this.props.redux.username} match={this.props.match}/>
+                <Nested username={this.props.redux.username} match={this.props.match} />
 			</div>
 		);
 	}

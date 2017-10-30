@@ -6,7 +6,7 @@ export default function (props) {
 	//The keyword WILL from the method name means that it runs before something happens. It is invoked before a mounted component gets props!
 	//However, it doesn't call with the inital props while mounitng. 
 	//It is especially good when the parent component has properties being changed.
-	
+
 	// componentWillReceiveProps(nextProps) {
 	// 	axios.get('/api/getUserInfo' + nextProps.userInfo)
 	//
@@ -15,6 +15,7 @@ export default function (props) {
 
 	return (
 		<div>
+			{console.log(props)}
 			I am a nested component with props!
 				<h1>{props.username}</h1>
 			<h1>{props.match.path}</h1>
