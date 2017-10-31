@@ -15,7 +15,6 @@ export default function (props) {
 
 	return (
 		<div>
-			{console.log(props)}
 			I am a nested component with props!
 				<h1>{props.username}</h1>
 			<h1>{props.match.path}</h1>

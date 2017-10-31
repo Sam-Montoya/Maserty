@@ -5,6 +5,19 @@ import { updateUsername } from '../../reducer';
 import Nested from './Nested';
 
 class Redux extends React.Component {
+	constructor(props) {
+		super(props);
+		console.log(props)
+	}
+
+	componentDidMount(props) {
+		console.log(props)
+	}
+
+	componentWillReceiveProps(nextProps) {
+		console.log(nextProps)
+	}
+
 	render() {
         console.log(this.props);
 		return (
